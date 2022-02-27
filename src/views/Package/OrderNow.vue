@@ -83,6 +83,18 @@
               v-model="choose_payment_status"
             ></v-select>
 
+            <v-radio-group
+              v-model="bank_id"
+              v-if="choose_payment_status === 'bank_transfer'"
+            >
+              <v-radio
+                v-for="(bank_account, index) in bank_accounts"
+                :key="index"
+                :label="`${bank_account.bank_name}@${bank_account.account_number}`"
+                :value="`${bank_account.bank_id}`"
+              ></v-radio>
+            </v-radio-group>
+
             <v-radio-group v-model="radios">
               <template v-slot:label>
                 <div><strong>Billing Cycle</strong></div>
@@ -156,6 +168,7 @@ export default {
   data() {
     return {
       packageplan: {},
+      bank_accounts: [],
       tnwuserdatastore: {},
       success: "",
       alertMessage: "",
@@ -163,18 +176,19 @@ export default {
       choosepayments: [
         {
           title: "Contact me",
-          value: "Contact me",
+          value: "contact_me",
         },
 
         {
           title: "Bank Transfer",
-          value: "Bank Transfer",
+          value: "bank_transfer",
         },
       ],
 
       radios: "1",
       contact: "",
       choose_payment_status: "",
+      bank_id: "",
     };
   },
 
@@ -191,7 +205,7 @@ export default {
       let SixFullPrice = this.sixMonthDisFull(this.packageplan);
 
       HTTP.get(
-        `package/ordernow?contactstatus=${this.contact}&choose_payment_status=${this.choose_payment_status}&BillingCycle=${this.radios}&OneMonthlyPrice=${OneMonthlyPrice}&ThreeMonthlyPrice=${ThreeMonthlyPrice}&ThreeFullPrice=${ThreeFullPrice}&SixMonthlyPrice=${SixMonthlyPrice}&SixFullPrice=${SixFullPrice}&user_id=${userId}&package_id=${this.$route.params.id}`
+        `package/ordernow?contactstatus=${this.contact}&choose_payment_status=${this.choose_payment_status}&BillingCycle=${this.radios}&OneMonthlyPrice=${OneMonthlyPrice}&ThreeMonthlyPrice=${ThreeMonthlyPrice}&ThreeFullPrice=${ThreeFullPrice}&SixMonthlyPrice=${SixMonthlyPrice}&SixFullPrice=${SixFullPrice}&user_id=${userId}&bank_id=${this.bank_id}&package_id=${this.$route.params.id}`
       )
         .then((response) => {
           if (response.status === 200) {
@@ -207,6 +221,16 @@ export default {
       HTTP.get(`package/packagedetail/${this.$route.params.id}`)
         .then((response) => {
           this.packageplan = response.data.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+
+    async fetch_bankaccount() {
+      HTTP.get(`bank/index`)
+        .then((response) => {
+          this.bank_accounts = response.data.data;
         })
         .catch((e) => {
           console.log(e);
@@ -240,6 +264,7 @@ export default {
 
   mounted() {
     this.fetch_packageplan();
+    this.fetch_bankaccount();
   },
 
   created() {
