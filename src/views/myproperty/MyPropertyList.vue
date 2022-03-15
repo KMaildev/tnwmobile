@@ -11,9 +11,6 @@
     <v-alert dense outlined type="success" v-if="success" style="margin: 2px">
       {{ success }}
     </v-alert>
-    <div v-if="propertyies.length == 0" class="text-center">
-      You've no posts.
-    </div>
     <Loader v-show="isLoad" />
     <v-card
       v-show="!isLoad"
@@ -218,15 +215,105 @@
             <v-card-actions style="padding: 1px">
               <v-spacer></v-spacer>
 
-              <v-btn
-                color="detailBtn"
-                x-small
-                class="white--text"
-                @click="SoldOutProperty(property.sale_id)"
-              >
-                <v-icon left small>mdi-swap-horizontal</v-icon>
-                ရောင်းပြီးပြုလုပ်ရန်
-              </v-btn>
+              <v-bottom-sheet inset>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    color="detailBtn"
+                    x-small
+                    class="white--text"
+                    v-bind="attrs"
+                    v-on="on"
+                  >
+                    <v-icon left small>mdi-menu</v-icon>
+                    Menu
+                  </v-btn>
+                </template>
+                <v-sheet height="auto">
+                  <v-list class="transparent">
+                    <v-list-item>
+                      <v-btn
+                        :to="{
+                          name: 'RefreshProperty',
+                          params: { id: property.sale_id },
+                        }"
+                        small
+                        color="indigo"
+                        block
+                        dark
+                      >
+                        <v-icon left small>mdi-home-edit-outline</v-icon>
+                        Refresh Ad
+                      </v-btn>
+                    </v-list-item>
+
+                    <v-list-item>
+                      <v-btn
+                        :to="{
+                          name: 'Adedit',
+                          params: { id: property.sale_id },
+                        }"
+                        small
+                        color="secondary"
+                        block
+                      >
+                        <v-icon left small>mdi-home-edit-outline </v-icon>
+                        ကြော်ငြာပြင်ရန်
+                      </v-btn>
+                    </v-list-item>
+
+                    <v-list-item>
+                      <v-btn
+                        @click="DeleteProperty(property.sale_id)"
+                        small
+                        color="error"
+                        block
+                      >
+                        <v-icon left small>mdi-delete-off-outline </v-icon>
+                        ကြော်ငြာဖျက်ရန်
+                      </v-btn>
+                    </v-list-item>
+
+                    <v-list-item>
+                      <v-btn
+                        :to="{
+                          name: 'Uploadphoto',
+                          params: { propertyId: property.sale_id },
+                        }"
+                        small
+                        color="success"
+                        block
+                      >
+                        <v-icon left small>mdi-image-multiple</v-icon>
+                        ဓာတ်ပုံထပ်ထည့်ရန်နှင့် ဖျက်ရန်
+                      </v-btn>
+                    </v-list-item>
+
+                    <v-list-item>
+                      <v-btn
+                        v-if="property.soldout_status == 0"
+                        @click="SoldOutProperty(property.sale_id)"
+                        small
+                        color="primary"
+                        block
+                      >
+                        <v-icon left small>mdi-swap-horizontal</v-icon>
+                        ရောင်းပြီးပြုလုပ်ရန်
+                      </v-btn>
+
+                      <v-btn
+                        v-if="property.soldout_status == 1"
+                        @click="UndoSoldOutProperty(property.sale_id)"
+                        small
+                        color="primary"
+                        block
+                      >
+                        <v-icon left small>mdi-swap-horizontal</v-icon>
+                        Undo (Sold Out)
+                      </v-btn>
+                    </v-list-item>
+                  </v-list>
+                </v-sheet>
+              </v-bottom-sheet>
 
               <v-col cols="auto">
                 <v-btn
@@ -288,7 +375,7 @@ export default {
 
   data() {
     return {
-      isLoad: false,
+      isLoad: true,
       propertyies: [],
       tatnaywon: {},
       tnwuserdatastore: {},
@@ -298,6 +385,7 @@ export default {
       LogoNotFound: LogoNotFound,
       APP_BASE_URL: APP_BASE_URL,
       success: "",
+      reveal: false,
     };
   },
 
@@ -305,7 +393,7 @@ export default {
     async fetch() {
       var userId = this.tnwuserdatastore.user_id;
       HTTP.get(
-        `property/myproperty/${this.$route.params.propertyType}/${userId}/${this.page}`
+        `property/myproperty/${this.$route.params.propertyType}/${userId}`
       )
         .then((response) => {
           this.propertyies.push(...response.data.data);
@@ -313,7 +401,7 @@ export default {
           this.isLoad = false;
         })
         .catch((e) => {
-          this.isLoad = false;
+          this.isLoad = true;
         });
     },
 
@@ -322,10 +410,48 @@ export default {
         .then((response) => {
           if (response.status === 200) {
             this.success = "ရောင်းပြီး(Sold Out) လုပ်ပြီးပါပြီ";
+            this.error = "";
+
+            this.page = 0;
+            this.fetch();
           }
         })
         .catch((e) => {
           this.error = "မအောင်မြင်ပါ";
+          this.success = "";
+        });
+    },
+
+    UndoSoldOutProperty: function (id) {
+      HTTP.get(`property/undosoldoutproperty/${id}`)
+        .then((response) => {
+          if (response.status === 200) {
+            this.success = "Undo လုပ်ပြီးပါပြီ";
+            this.error = "";
+
+            this.page = 0;
+            this.fetch();
+          }
+        })
+        .catch((e) => {
+          this.error = "မအောင်မြင်ပါ";
+          this.success = "";
+        });
+    },
+
+    DeleteProperty: function (id) {
+      HTTP.get(`property/DeleteProperty/${id}`)
+        .then((response) => {
+          if (response.status === 200) {
+            this.success = "ဖျက်ပြီးပါပြီ";
+            this.error = "";
+            this.page = 0;
+            this.fetch();
+          }
+        })
+        .catch((e) => {
+          this.error = "မအောင်မြင်ပါ";
+          this.success = "";
         });
     },
 

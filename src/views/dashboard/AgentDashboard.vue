@@ -241,9 +241,7 @@ export default {
   created() {
     let tnwuserstore = localStorage.getItem("tnwuserstore");
     this.tnwuserdatastore = JSON.parse(tnwuserstore);
-  },
 
-  created() {
     let language = localStorage.getItem("language");
     if (language) {
       this.setLanguage = true;

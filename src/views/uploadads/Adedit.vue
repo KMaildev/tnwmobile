@@ -35,7 +35,7 @@
             {{ success }}
           </v-alert>
 
-          <form @submit.prevent="update_property">
+          <form @submit.prevent="update_property" id="formbottom">
             <v-card flat>
               <v-card-text>
                 <div>
@@ -487,6 +487,10 @@ export default {
       floor: "",
       build_year: "",
       bankinstallment: "No",
+
+      form: {
+        title_mm: "Hello",
+      },
     };
   },
 
@@ -534,8 +538,37 @@ export default {
       } else if (this.propertyDetail.township_id == "") {
         this.messages = "မြို့နယ်ကို ရွေးပါ";
       } else {
-        HTTP.get(
-          `property/updated?title_mm=${this.propertyDetail.title_mm}&title_eng=${this.propertyDetail.title_eng}&property_type_id=${this.propertyDetail.property_type_id}&price=${this.propertyDetail.price}&price_type=${this.propertyDetail.price_type}&property_status=${this.propertyDetail.property_status}&area=${this.propertyDetail.area}&area_type=${this.propertyDetail.area_type}&room=${this.propertyDetail.rooms}&bathroom=${this.propertyDetail.bathroom}&bedroom=${this.propertyDetail.bead_room}&masterbathroom=${this.propertyDetail.masterbathroom}&livingroom=${this.propertyDetail.living_room}&region_id=${this.propertyDetail.regions_id}&township_id=${this.propertyDetail.township_id}&contact_number=${this.propertyDetail.contact_number}&description_mm=${this.propertyDetail.description_mm}&description_eng=${this.propertyDetail.description_eng}&floor=${this.propertyDetail.floor}&build_year=${this.propertyDetail.year_built}&bankinstallment=${this.propertyDetail.bankinstallment}&sale_id=${this.$route.params.id}`
+        HTTP.post(
+          "property/upda",
+          {
+            title_mm: this.propertyDetail.title_mm,
+            title_eng: this.propertyDetail.title_eng,
+            property_type_id: this.propertyDetail.property_type_id,
+            price: this.propertyDetail.price,
+            price_type: this.propertyDetail.price_type,
+            property_status: this.propertyDetail.property_status,
+            area: this.propertyDetail.area,
+            area_type: this.propertyDetail.area_type,
+            room: this.propertyDetail.rooms,
+            bathroom: this.propertyDetail.bathroom,
+            bedroom: this.propertyDetail.bead_room,
+            masterbathroom: this.propertyDetail.masterbathroom,
+            livingroom: this.propertyDetail.living_room,
+            region_id: this.propertyDetail.regions_id,
+            township_id: this.propertyDetail.township_id,
+            contact_number: this.propertyDetail.contact_number,
+            description_mm: this.propertyDetail.description_mm,
+            description_eng: this.propertyDetail.description_eng,
+            floor: this.propertyDetail.floor,
+            build_year: this.propertyDetail.year_built,
+            bankinstallment: this.propertyDetail.bankinstallment,
+            sale_id: this.$route.params.id,
+          },
+          {
+            headers: {
+              "Content-type": "application/x-www-form-urlencoded",
+            },
+          }
         )
           .then((response) => {
             if (response.status === 200) {

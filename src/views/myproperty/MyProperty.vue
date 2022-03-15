@@ -56,6 +56,50 @@
               class="pa-md-4"
               style="height: 130px"
               :to="{
+                name: 'FuaturedMyPropertyList',
+                params: { propertyType: 'for_sale' },
+              }"
+            >
+              <v-icon large style="padding-top: 6px"
+                >mdi-office-building-marker-outline</v-icon
+              >
+              <v-card-text style="font-size: 12px">{{
+                setLanguage == true
+                  ? "For Sale Property"
+                  : "အထူးကြော်ငြာ(ရောင်းရန်)"
+              }}</v-card-text>
+            </v-card>
+          </v-flex>
+
+          <v-flex xs6 sm4 order-md2 order-sm1 pa-1>
+            <v-card
+              dark
+              color="#f09a42"
+              class="pa-md-4"
+              style="height: 130px"
+              :to="{
+                name: 'FuaturedMyPropertyList',
+                params: { propertyType: 'for_rent' },
+              }"
+            >
+              <v-icon large style="padding-top: 6px"
+                >mdi-office-building-marker-outline</v-icon
+              >
+              <v-card-text style="font-size: 12px">{{
+                setLanguage == true
+                  ? "For Sale Property"
+                  : "အထူးကြော်ငြာ(ငှားရန်)"
+              }}</v-card-text>
+            </v-card>
+          </v-flex>
+
+          <v-flex xs6 sm4 order-md2 order-sm1 pa-1>
+            <v-card
+              dark
+              color="#f09a42"
+              class="pa-md-4"
+              style="height: 130px"
+              :to="{
                 name: 'MyPropertyList',
                 params: { propertyType: 'for_rent' },
               }"

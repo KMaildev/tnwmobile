@@ -36,16 +36,46 @@
           <v-list-item-title>
             <span style="font-size: 12px">
               <a
-                :href="`tel:09-268858885`"
+                :href="`tel:09 42000 7322`"
                 style="text-decoration: none; color: black"
               >
-                09-268858885,
+                09 42000 7322
               </a>
+            </span>
+          </v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+
+      <v-list-item>
+        <v-list-item-action>
+          <v-icon>mdi-phone</v-icon>
+        </v-list-item-action>
+        <v-list-item-content>
+          <v-list-item-title>
+            <span style="font-size: 12px">
               <a
-                :href="`tel:09-425306167`"
+                :href="`tel:09 42000 5622`"
                 style="text-decoration: none; color: black"
               >
-                09-425306167
+                09 42000 5622
+              </a>
+            </span>
+          </v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+
+      <v-list-item>
+        <v-list-item-action>
+          <v-icon>mdi-phone</v-icon>
+        </v-list-item-action>
+        <v-list-item-content>
+          <v-list-item-title>
+            <span style="font-size: 12px">
+              <a
+                :href="`tel:09740917954`"
+                style="text-decoration: none; color: black"
+              >
+                09 740 917 954
               </a>
             </span>
           </v-list-item-title>
@@ -83,7 +113,7 @@
       {{ messages }}
     </v-alert>
 
-    <form @submit.prevent="ContactUs">
+    <form @submit.prevent="ContactUs" id="formbottom">
       <v-card-text>
         <v-text-field
           v-model="name"
@@ -153,10 +183,12 @@ export default {
         .then((response) => {
           if (response.status === 200) {
             this.success = "လုပ်ဆောင်ချက် အောင်မြင်ပါသည်။";
+            this.messages = "";
           }
         })
         .catch((e) => {
           this.messages = "အချက်အလက်များကို ထည့်သွင်းပါ။";
+          this.success = "";
         });
     },
   },

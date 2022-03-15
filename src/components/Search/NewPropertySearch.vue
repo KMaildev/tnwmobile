@@ -130,6 +130,10 @@ export default {
 
       priceFroms: [
         {
+          title: "50 သိန်း",
+          value: "50",
+        },
+        {
           title: "100 သိန်း",
           value: "100",
         },
@@ -232,6 +236,10 @@ export default {
       ],
 
       to: [
+        {
+          title: "50 သိန်း",
+          value: "50",
+        },
         {
           title: "100 သိန်း",
           value: "100",

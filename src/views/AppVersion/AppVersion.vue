@@ -33,7 +33,7 @@
     <div class="flex social-btns">
       <a
         class="app-btn blu flex vert"
-        href="https://play.google.com/store/apps/details?id=com.tatnaywoncompany.tatnaywonproperty"
+        href="https://play.google.com/store/apps/details?id=com.tatnaywonrealestatecompany.tatnaywonproperty"
         target="_blank"
       >
         <v-icon style="color: white"> mdi-google-play </v-icon>

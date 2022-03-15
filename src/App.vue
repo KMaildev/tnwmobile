@@ -248,7 +248,7 @@ export default {
       },
 
       {
-        title: "အိမ်ရှာဖွေသူများ(Wanted Listing)",
+        title: "အိမ်ရှာဖွေသူများ",
         eng: "Wanted Listing",
         icon: "mdi-home-search",
         to: {

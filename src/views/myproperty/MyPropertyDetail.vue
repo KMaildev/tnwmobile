@@ -524,11 +524,44 @@
 
     <div class="text-center">
       <v-btn color="warning" dark @click="sheet = !sheet" block>
-        လုပ်ဆောင်ချက်မျာ
+        လုပ်ဆောင်ချက်များ
       </v-btn>
       <v-bottom-sheet v-model="sheet">
         <v-sheet class="text-center" height="200px">
           <br />
+
+          <div class="py-1" hidden>
+            <v-btn
+              :to="{
+                name: 'FeaturedProperty',
+                params: { id: propertyDetail.sale_id },
+              }"
+              color="indigo"
+              small
+              dark
+              block
+            >
+              <v-icon left> mdi-home-edit-outline </v-icon>
+              အထူးကြော်ငြာ ပြုလုပ်ရန်
+            </v-btn>
+          </div>
+
+          <div class="py-1">
+            <v-btn
+              :to="{
+                name: 'RefreshProperty',
+                params: { id: propertyDetail.sale_id },
+              }"
+              color="indigo"
+              small
+              dark
+              block
+            >
+              <v-icon left> mdi-home-edit-outline </v-icon>
+              Refresh Ad
+            </v-btn>
+          </div>
+
           <div class="py-1">
             <v-btn
               :to="{
@@ -556,6 +589,7 @@
               ကြော်ငြာဖျက်ရန်
             </v-btn>
           </div>
+
           <div class="py-1">
             <v-btn
               color="success"
@@ -571,8 +605,10 @@
               ဓာတ်ပုံထပ်ထည့်ရန်နှင့် ဖျက်ရန်
             </v-btn>
           </div>
+
           <div class="py-1">
             <v-btn
+              v-if="propertyDetail.soldout_status == 0"
               color="primary"
               small
               dark
@@ -581,6 +617,18 @@
             >
               <v-icon left> mdi-swap-horizontal </v-icon>
               ရောင်းပြီးပြုလုပ်ရန် (Sold Out)
+            </v-btn>
+
+            <v-btn
+              v-if="propertyDetail.soldout_status == 1"
+              color="primary"
+              small
+              dark
+              block
+              @click="UndoSoldOutProperty(propertyDetail.sale_id)"
+            >
+              <v-icon left> mdi-swap-horizontal </v-icon>
+              Undo (Sold Out)
             </v-btn>
           </div>
         </v-sheet>
@@ -686,10 +734,26 @@ export default {
         .then((response) => {
           if (response.status === 200) {
             this.success = "ရောင်းပြီး(Sold Out) လုပ်ပြီးပါပြီ";
+            this.error = "";
           }
         })
         .catch((e) => {
           this.error = "မအောင်မြင်ပါ";
+          this.success = "";
+        });
+    },
+
+    UndoSoldOutProperty: function (id) {
+      HTTP.get(`property/undosoldoutproperty/${id}`)
+        .then((response) => {
+          if (response.status === 200) {
+            this.success = "Undo လုပ်ပြီးပါပြီ";
+            this.error = "";
+          }
+        })
+        .catch((e) => {
+          this.error = "မအောင်မြင်ပါ";
+          this.success = "";
         });
     },
   },

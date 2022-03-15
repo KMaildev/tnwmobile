@@ -84,7 +84,7 @@
             {{ success }}
           </v-alert>
 
-          <form @submit.prevent="create_property">
+          <form @submit.prevent="create_property" id="formbottom">
             <v-card flat>
               <v-card-text v-if="setLanguage == true">
                 {{ tab.eng }} Ad
@@ -651,8 +651,39 @@ export default {
       } else if (this.township_id == "") {
         this.messages = "မြို့နယ်ကို ရွေးပါ";
       } else {
-        HTTP.get(
-          `property/created?title_mm=${this.title_mm}&title_eng=${this.title_eng}&property_type_id=${this.property_type_id}&price=${this.price}&price_type=${this.price_type}&property_status=${this.property_status}&area=${this.area}&area_type=${this.area_type}&room=${this.room}&bathroom=${this.bathroom}&bedroom=${this.bedroom}&masterbathroom=${this.masterbathroom}&livingroom=${this.livingroom}&region_id=${this.region_id}&township_id=${this.township_id}&contact_number=${this.contact_number}&description_mm=${this.description_mm}&description_eng=${this.description_eng}&floor=${this.floor}&build_year=${this.build_year}&bankinstallment=${this.bankinstallment}&floor=${this.floor}&TypeOfProperty=${this.TypeOfProperty}&userId=${userId}`
+        HTTP.post(
+          "property/creat",
+          {
+            title_mm: this.title_mm,
+            title_eng: this.title_eng,
+            property_type_id: this.property_type_id,
+            price: this.price,
+            price_type: this.price_type,
+            property_status: this.property_status,
+            area: this.area,
+            area_type: this.area_type,
+            room: this.room,
+            bathroom: this.bathroom,
+            bedroom: this.bedroom,
+            masterbathroom: this.masterbathroom,
+            livingroom: this.livingroom,
+            region_id: this.region_id,
+            township_id: this.township_id,
+            contact_number: this.contact_number,
+            description_mm: this.description_mm,
+            description_eng: this.description_eng,
+            floor: this.floor,
+            build_year: this.build_year,
+            bankinstallment: this.bankinstallment,
+            floor: this.floor,
+            TypeOfProperty: this.TypeOfProperty,
+            userId: userId,
+          },
+          {
+            headers: {
+              "Content-type": "application/x-www-form-urlencoded",
+            },
+          }
         )
           .then((response) => {
             if (response.status === 200) {

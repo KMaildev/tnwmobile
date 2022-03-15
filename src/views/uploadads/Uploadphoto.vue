@@ -142,7 +142,7 @@ export default {
                 name: "Uploadphoto",
                 params: { propertyId: this.$route.params.propertyId },
               });
-              window.location.reload();
+              // window.location.reload();
             }
           })
           .catch((e) => {

@@ -36,9 +36,16 @@ import Adedit from '@/views/uploadads/Adedit';
 
 import Uploadphoto from '@/views/uploadads/Uploadphoto';
 import MyProperty from '@/views/myproperty/MyProperty';
+
 import MyPropertyList from '@/views/myproperty/MyPropertyList';
+import FuaturedMyPropertyList from '@/views/myproperty/FuaturedMyPropertyList';
+
 import SoldOutProperty from '@/views/myproperty/SoldOutProperty';
+
 import MyPropertyDetail from '@/views/myproperty/MyPropertyDetail';
+import FeaturedProperty from '@/views/featured/FeaturedProperty';
+import RefreshProperty from '@/views/refresh/RefreshProperty';
+
 import ComingSoon from '@/views/ComingSoon/ComingSoon';
 import MyWantedList from '@/views/MyWantedList/MyWantedList';
 import MyWantedListDetail from '@/views/MyWantedList/MyWantedListDetail';
@@ -280,6 +287,13 @@ const routes = [
     component: MyPropertyList
   },
 
+
+  {
+    path: '/fuaturedmypropertylist/:propertyType',
+    name: 'FuaturedMyPropertyList',
+    component: FuaturedMyPropertyList
+  },
+
   {
     path: '/soldoutproperty/:propertyType',
     name: 'SoldOutProperty',
@@ -291,6 +305,20 @@ const routes = [
     name: 'MyPropertyDetail',
     component: MyPropertyDetail
   },
+
+
+  {
+    path: "/featured_property/:id",
+    name: 'FeaturedProperty',
+    component: FeaturedProperty
+  },
+
+  {
+    path: "/refresh_property/:id",
+    name: 'RefreshProperty',
+    component: RefreshProperty
+  },
+
 
 
   {

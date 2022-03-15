@@ -107,7 +107,9 @@
       </v-radio-group>
 
       <v-card-actions style="background-color: #f6f6f6">
-        <v-btn type="submit" block color="warning" dark> {{ setLanguage == true ? "Search" : "ရှာဖွေပါ" }} </v-btn>
+        <v-btn type="submit" block color="warning" dark>
+          {{ setLanguage == true ? "Search" : "ရှာဖွေပါ" }}
+        </v-btn>
       </v-card-actions>
     </v-form>
   </div>
@@ -127,6 +129,10 @@ export default {
       propertytype: [],
 
       priceFroms: [
+        {
+          title: "50 သိန်း",
+          value: "50",
+        },
         {
           title: "100 သိန်း",
           value: "100",
@@ -230,6 +236,10 @@ export default {
       ],
 
       to: [
+        {
+          title: "50 သိန်း",
+          value: "50",
+        },
         {
           title: "100 သိန်း",
           value: "100",

@@ -1,7 +1,6 @@
 <template>
   <div>
     <MainScreenImage></MainScreenImage>
-
     <v-row style="background-color: white">
       <v-col cols="12" sm="12">
         <span style="font-size: 12px">{{
@@ -69,7 +68,6 @@
     </v-row>
 
     <PropertyTag></PropertyTag>
-
     <v-row style="background-color: white">
       <v-col cols="12" sm="12">
         <Loader v-show="isLoad" />
@@ -544,11 +542,12 @@ export default {
     },
 
     async property_fetch() {
-      HTTP.get(`property/index/by_owner_for_sale/${this.propertyPage}`)
+      HTTP.get(`property/homepage/${this.propertyPage}`)
         .then((response) => {
           this.propertyies.push(...response.data.data);
           this.tatnaywon = response.data.tatnaywon;
           this.isLoad = false;
+          console.log(response);
         })
         .catch((e) => {
           this.isLoad = true;
@@ -635,5 +634,13 @@ export default {
   box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
     0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
   transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#create .v-speed-dial {
+  position: absolute;
+}
+
+#create .v-btn--floating {
+  position: relative;
 }
 </style>

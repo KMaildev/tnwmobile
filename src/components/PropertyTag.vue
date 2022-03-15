@@ -29,20 +29,20 @@ export default {
       setLanguage: false,
       items: [
         {
+          title: "အထူးရောင်းရန် အိမ်ခြံမြေများ",
+          eng: "For Sale",
+          to: {
+            name: "property",
+            params: { propertyType: "for_sale" },
+          },
+        },
+
+        {
           title: "ပိုင်ရှင်ကိုယ်တိုင် ရောင်းမည်",
           eng: "By Owner For Sale",
           to: {
             name: "property",
             params: { propertyType: "by_owner_for_sale" },
-          },
-        },
-
-        {
-          title: "ရောင်းရန်",
-          eng: "For Sale",
-          to: {
-            name: "property",
-            params: { propertyType: "for_sale" },
           },
         },
 

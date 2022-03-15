@@ -7,10 +7,6 @@
       down: () => swipe('Down'),
     }"
   >
-    <div v-if="propertyies.length == 0" class="text-center">
-      You've no posts.
-    </div>
-
     <v-alert dense outlined type="success" v-if="success" style="margin: 2px">
       {{ success }}
     </v-alert>
@@ -264,7 +260,7 @@ export default {
 
   data() {
     return {
-      isLoad: false,
+      isLoad: true,
       propertyies: [],
       tatnaywon: {},
       tnwuserdatastore: {},
@@ -287,7 +283,7 @@ export default {
           this.isLoad = false;
         })
         .catch((e) => {
-          this.isLoad = false;
+          this.isLoad = true;
         });
     },
 

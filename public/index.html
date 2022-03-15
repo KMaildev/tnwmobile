@@ -5,6 +5,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
   <link rel="icon" href="<%= BASE_URL %>favicon.ico">
   <title>
     <%= htmlWebpackPlugin.options.title %>
@@ -13,6 +15,16 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Padauk:wght@400;700&family=Raleway:wght@300;500;600;700&display=swap');
+
+    *:not(i) {
+      font-family: 'Raleway', 'Padauk', sans-serif !important;
+    }
+
+    .mm-font {
+      line-height: 1.8 !important;
+    }
+
     * {
       line-height: 1.6;
     }
@@ -20,6 +32,10 @@
     #standard_label_style label {
       line-height: 1.6;
       font-size: 13px;
+    }
+
+    #formbottom {
+      padding-bottom: 50%;
     }
   </style>
 </head>
