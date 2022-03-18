@@ -32,6 +32,7 @@
               multiple
               id="file-input"
               class="file-input__input"
+              @change="onFileChange"
             />
             <label class="file-input__label" for="file-input">
               <svg
@@ -68,16 +69,21 @@
             </v-btn>
           </center>
         </div>
-        <div class="col-md-12">
-          <v-fade-transition mode="out-in">
+        <v-fade-transition mode="out-in">
+          <div class="col-md-12 col-lg-12 col-sm-12">
             <v-row>
-              <v-col cols="6" v-for="(image, index) in images" :key="index">
+              <v-col cols="12">
+                Number Of Chosen Photos : {{ previewImages.length }}
+              </v-col>
+              <v-col cols="6" v-for="(image, key) in previewImages" :key="key">
                 <v-card>
-                  <v-img
-                    :src="IMAGE_URL + image.photo"
-                    height="125"
+                  <img
+                    v-bind:ref="'image'"
+                    alt=""
+                    src=""
                     class="grey darken-4"
-                  ></v-img>
+                    style="width: 100%; height: 125px; object-position: center"
+                  />
                   <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn
@@ -85,16 +91,47 @@
                       block
                       color="pink"
                       dark
-                      @click="DeleteImage(image.propertie_id)"
+                      @click="removeImage(image, key)"
                     >
-                      Delete
+                      Remove
                     </v-btn>
                   </v-card-actions>
                 </v-card>
               </v-col>
             </v-row>
-          </v-fade-transition>
-        </div>
+
+            <v-row v-if="status === true">
+              <v-col cols="12">
+                <hr />
+                <br />
+                Number Of Uploaded Photos : {{ images.length }}
+              </v-col>
+              <v-col cols="6" v-for="(image, index) in images" :key="index">
+                <v-card>
+                  <v-responsive :aspect-ratio="16 / 9">
+                    <v-img
+                      :src="IMAGE_URL + image.photo"
+                      height="125"
+                      class="grey darken-4"
+                    ></v-img>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn
+                        x-small
+                        block
+                        color="pink"
+                        dark
+                        @click="DeleteImage(image.propertie_id)"
+                      >
+                        Delete
+                      </v-btn>
+                    </v-card-actions>
+                  </v-responsive>
+                </v-card>
+              </v-col>
+            </v-row>
+          </div>
+        </v-fade-transition>
       </v-row>
     </v-container>
   </div>
@@ -111,6 +148,7 @@ export default {
     return {
       images: [],
       file: [],
+      previewImages: [],
       success: "",
       error: "",
       IMAGE_URL: IMAGE_URL,
@@ -121,6 +159,8 @@ export default {
   methods: {
     uploadImage: function () {
       // this.file = this.$refs.file.files[0];
+      var totalFile = this.$refs.file.files.length;
+      var total = 0;
       var formData = new FormData();
       for (var i = 0; i < this.$refs.file.files.length; i++) {
         this.file = this.$refs.file.files[i];
@@ -138,11 +178,11 @@ export default {
           .then((response) => {
             if (response.status === 200) {
               this.success = "ဓာတ်ပုံတင်ပြီးပါပြီ";
+              this.error = "";
               this.$router.push({
-                name: "Uploadphoto",
+                name: "PhotoUpload",
                 params: { propertyId: this.$route.params.propertyId },
               });
-              // window.location.reload();
             }
           })
           .catch((e) => {
@@ -151,13 +191,40 @@ export default {
       }
     },
 
+    onFileChange(e) {
+      let selectedFiles = e.target.files;
+      for (let i = 0; i < selectedFiles.length; i++) {
+        this.previewImages.push(selectedFiles[i]);
+      }
+      this.applyImage();
+    },
+
+    removeImage(image, index) {
+      console.log(this.previewImages);
+      this.previewImages.splice(index, 1);
+      this.applyImage();
+      //this.$refs.image[index].src = "" // You are hidding the 3rd one that is now in index 1.
+    },
+
+    applyImage() {
+      for (let i = 0; i < this.previewImages.length; i++) {
+        let reader = new FileReader();
+        reader.onload = (e) => {
+          this.$refs.image[i].src = reader.result;
+        };
+        reader.readAsDataURL(this.previewImages[i]);
+      }
+    },
+
     async fetch_image() {
       HTTP.get(`property/fetchImage/${this.$route.params.propertyId}`)
         .then((response) => {
           this.images.push(...response.data.data);
+          this.status = true;
         })
         .catch((e) => {
           console.log(e);
+          this.status = false;
         });
     },
 
@@ -166,12 +233,24 @@ export default {
         .then((response) => {
           if (response.status === 200) {
             this.success = "ဖျက်ပြီးပါပြီ";
-            window.location.reload();
+            this.error = "";
+            this.images = [];
+            this.fetch_image();
           }
         })
         .catch((e) => {
           this.error = "မအောင်မြင်ပါ";
+          this.success = "";
         });
+    },
+
+    fetch_image_recall: function (totalFile, upload_total) {
+      // console.log(totalFile);
+      // console.log(upload_total);
+      if (totalFile === upload_total) {
+        this.images = [];
+        this.fetch_image();
+      }
     },
   },
 

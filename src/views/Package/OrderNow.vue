@@ -83,18 +83,6 @@
               v-model="choose_payment_status"
             ></v-select>
 
-            <v-radio-group
-              v-model="bank_id"
-              v-if="choose_payment_status === 'bank_transfer'"
-            >
-              <v-radio
-                v-for="(bank_account, index) in bank_accounts"
-                :key="index"
-                :label="`${bank_account.bank_name}@${bank_account.account_number}`"
-                :value="`${bank_account.bank_id}`"
-              ></v-radio>
-            </v-radio-group>
-
             <v-radio-group v-model="radios">
               <template v-slot:label>
                 <div><strong>Billing Cycle</strong></div>
@@ -154,6 +142,30 @@
               </v-radio>
             </v-radio-group>
 
+            <v-radio-group
+              v-model="bank_id"
+              v-if="choose_payment_status === 'bank_transfer'"
+            >
+              <template v-slot:label>
+                <div><strong>Bank Accounts</strong></div>
+              </template>
+              <v-radio
+                v-for="(bank_account, index) in bank_accounts"
+                :key="index"
+                :label="`${bank_account.bank_name}@${bank_account.account_number}`"
+                :value="`${bank_account.bank_id}`"
+              ></v-radio>
+            </v-radio-group>
+
+            <v-file-input
+              v-if="choose_payment_status === 'bank_transfer'"
+              v-model="payment_screenshot_file"
+              placeholder="Payment Screenshot"
+              label="Payment Screenshot"
+              prepend-icon="mdi-paperclip"
+            >
+            </v-file-input>
+
             <v-btn type="submit" block color="warning" dark> Order Now </v-btn>
           </v-card-text>
         </v-card>
@@ -189,12 +201,14 @@ export default {
       contact: "",
       choose_payment_status: "",
       bank_id: "",
+      payment_screenshot_file: "",
     };
   },
 
   methods: {
     async OrderNow() {
       let userId = this.tnwuserdatastore.user_id;
+      let package_id = this.$route.params.id;
 
       let OneMonthlyPrice = this.packageplan.price;
 
@@ -204,16 +218,33 @@ export default {
       let SixMonthlyPrice = this.sixMonthDis(this.packageplan);
       let SixFullPrice = this.sixMonthDisFull(this.packageplan);
 
-      HTTP.get(
-        `package/ordernow?contactstatus=${this.contact}&choose_payment_status=${this.choose_payment_status}&BillingCycle=${this.radios}&OneMonthlyPrice=${OneMonthlyPrice}&ThreeMonthlyPrice=${ThreeMonthlyPrice}&ThreeFullPrice=${ThreeFullPrice}&SixMonthlyPrice=${SixMonthlyPrice}&SixFullPrice=${SixFullPrice}&user_id=${userId}&bank_id=${this.bank_id}&package_id=${this.$route.params.id}`
-      )
+      var formData = new FormData();
+      formData.append("file", this.payment_screenshot_file);
+      formData.append("contactstatus", this.contact);
+      formData.append("choose_payment_status", this.choose_payment_status);
+      formData.append("BillingCycle", this.radios);
+      formData.append("OneMonthlyPrice", OneMonthlyPrice);
+      formData.append("ThreeMonthlyPrice", ThreeMonthlyPrice);
+      formData.append("ThreeFullPrice", ThreeFullPrice);
+      formData.append("SixMonthlyPrice", SixMonthlyPrice);
+      formData.append("SixFullPrice", SixFullPrice);
+      formData.append("user_id", userId);
+      formData.append("bank_id", this.bank_id);
+      formData.append("package_id", package_id);
+      HTTP.post(`package/ordernowdemo`, formData, {
+        header: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
         .then((response) => {
           if (response.status === 200) {
             this.success = "လုပ်ဆောင်ချက် အောင်မြင်ပါသည်";
+            this.alertMessage = "";
           }
         })
         .catch((e) => {
           this.alertMessage = "အချက်အလက်များကို ထည့်သွင်းပါ။";
+          this.success = "";
         });
     },
 

@@ -35,6 +35,8 @@ import Adcreate from '@/views/uploadads/Adcreate';
 import Adedit from '@/views/uploadads/Adedit';
 
 import Uploadphoto from '@/views/uploadads/Uploadphoto';
+import PhotoUpload from '@/views/uploadads/PhotoUpload';
+
 import MyProperty from '@/views/myproperty/MyProperty';
 
 import MyPropertyList from '@/views/myproperty/MyPropertyList';
@@ -268,6 +270,15 @@ const routes = [
     name: 'Uploadphoto',
     component: Uploadphoto
   },
+
+  {
+    path: '/photoupload/:propertyId',
+    name: 'PhotoUpload',
+    component: PhotoUpload
+  },
+
+
+
 
   {
     path: '/myproperty',
