@@ -29,8 +29,8 @@ export default {
       setLanguage: false,
       items: [
         {
-          title: "အထူးရောင်းရန် အိမ်ခြံမြေများ",
-          eng: "For Sale",
+          title: "အထူးကြော်ငြာများ",
+          eng: "အထူးကြော်ငြာများ",
           to: {
             name: "property",
             params: { propertyType: "for_sale" },
@@ -38,11 +38,11 @@ export default {
         },
 
         {
-          title: "ပိုင်ရှင်ကိုယ်တိုင် ရောင်းမည်",
-          eng: "By Owner For Sale",
+          title: "ရောင်းရန်",
+          eng: "For Sale",
           to: {
             name: "property",
-            params: { propertyType: "by_owner_for_sale" },
+            params: { propertyType: "for_sale" },
           },
         },
 
@@ -52,6 +52,15 @@ export default {
           to: {
             name: "property",
             params: { propertyType: "for_rent" },
+          },
+        },
+
+        {
+          title: "ပိုင်ရှင်ကိုယ်တိုင် ရောင်းမည်",
+          eng: "By Owner For Sale",
+          to: {
+            name: "property",
+            params: { propertyType: "by_owner_for_sale" },
           },
         },
 

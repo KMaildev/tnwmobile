@@ -73,6 +73,9 @@ import OrderNow from '@/views/Package/OrderNow';
 import PropertyByCompany from '@/views/propertybycompany/PropertyByCompany';
 
 
+import PropertyListStore from '@/views/LocalStore/PropertyListStore';
+
+
 
 
 Vue.use(VueRouter)
@@ -89,6 +92,7 @@ const routes = [
     name: 'property',
     component: PropertyList
   },
+
 
   {
     path: '/propertybycompany/:propertyType/userId/:userId',

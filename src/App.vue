@@ -7,7 +7,7 @@
           <v-list color="#fcfcfc">
             <v-list-item>
               <v-img
-                src="https://www.tatnaywonproperty.com/data/logo/logo1.png"
+                src="http://www.tatnaywonproperty.com/data/logo/logo1.png"
                 contain
                 width="100"
                 height="auto"

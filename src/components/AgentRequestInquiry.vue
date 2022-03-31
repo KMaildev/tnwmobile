@@ -51,7 +51,7 @@
       </v-card-text>
     </form>
 
-    <form @submit.prevent="TakeAppointments">
+    <form @submit.prevent="TakeAppointments" id="formbottom">
       <v-card-text>
         <v-row>
           <v-col cols="6" sm="6" md="6">
@@ -156,7 +156,7 @@ export default {
       name: "",
       phone: "",
       email: "",
-      subjects: "",
+      subjects: "ကြော်ငြာနံပါတ် S-000153 အကြောင်းကို ပိုမိုသိလိုသည်။",
       description: "",
       phone_number: "",
     };

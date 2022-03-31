@@ -415,7 +415,6 @@ export default {
           this.propertyies.push(...response.data.data);
           this.tatnaywon = response.data.tatnaywon;
           this.isLoad = false;
-          console.log(response);
         })
         .catch((e) => {
           this.isLoad = true;

@@ -547,7 +547,22 @@ export default {
           this.propertyies.push(...response.data.data);
           this.tatnaywon = response.data.tatnaywon;
           this.isLoad = false;
-          console.log(response);
+        })
+        .catch((e) => {
+          this.isLoad = true;
+        });
+    },
+
+    async propertyall_for_sale() {
+      HTTP.get(`property/allproperty/for_sale/0`)
+        .then((response) => {
+          this.propertyies.push(...response.data.data);
+          this.tatnaywon = response.data.tatnaywon;
+          var propertyData = response.data.data;
+          localStorage.setItem(
+            "propertyForSales",
+            JSON.stringify(propertyData)
+          );
         })
         .catch((e) => {
           this.isLoad = true;
