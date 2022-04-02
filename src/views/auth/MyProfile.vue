@@ -138,7 +138,7 @@
 
     <div class="text-center">
       <v-btn color="warning" dark @click="sheet = !sheet" block>
-        လုပ်ဆောင်ချက်မျာ
+        လုပ်ဆောင်ချက်များ
       </v-btn>
       <v-bottom-sheet v-model="sheet">
         <v-sheet class="text-center" height="150px">
