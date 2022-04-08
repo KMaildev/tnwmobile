@@ -4,27 +4,7 @@
       <v-container fluid>
         <!-- Nav Menu -->
         <v-navigation-drawer v-model="drawer" app>
-          <v-list color="#fcfcfc">
-            <v-list-item>
-              <v-img
-                src="http://www.tatnaywonproperty.com/data/logo/logo1.png"
-                contain
-                width="100"
-                height="auto"
-              ></v-img>
-            </v-list-item>
-
-            <v-list-item link>
-              <v-list-item-content>
-                <v-list-item-title class="text-h6 black--text">
-                  Welcome
-                </v-list-item-title>
-                <v-list-item-subtitle class="black--text">
-                  tatnaywonproperty.com
-                </v-list-item-subtitle>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list>
+          <AccountHeader></AccountHeader>
 
           <v-divider></v-divider>
           <v-list dense nav>
@@ -171,6 +151,7 @@
 </template>
 
 <script>
+import AccountHeader from "@/components/AccountHeader";
 export default {
   name: "App",
 
@@ -439,6 +420,10 @@ export default {
         window.location.reload();
       }
     },
+  },
+
+  components: {
+    AccountHeader,
   },
 };
 </script>

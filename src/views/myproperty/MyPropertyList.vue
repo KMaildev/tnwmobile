@@ -233,6 +233,22 @@
                     <v-list-item>
                       <v-btn
                         :to="{
+                          name: 'FeaturedProperty',
+                          params: { id: property.sale_id },
+                        }"
+                        small
+                        color="warning"
+                        block
+                        dark
+                      >
+                        <v-icon left small>mdi-home-edit-outline</v-icon>
+                        အထူးကြော်ငြာ ပြုလုပ်ရန်
+                      </v-btn>
+                    </v-list-item>
+
+                    <v-list-item>
+                      <v-btn
+                        :to="{
                           name: 'RefreshProperty',
                           params: { id: property.sale_id },
                         }"

@@ -208,6 +208,19 @@
               v-model="description_eng"
               filled
             ></v-textarea>
+
+            <div v-if="no_of_featuredpost == 0"></div>
+            <div
+              v-else-if="
+                (PostTotal = +(no_of_featuredpost - total_featured_ad)) == 0
+              "
+            ></div>
+            <div v-else>
+              <v-checkbox
+                v-model="top_featured"
+                :label="`အထူးကြော်ငြာပြုလုပ်မည်`"
+              ></v-checkbox>
+            </div>
           </div>
         </v-card-text>
         <v-card-actions>
@@ -233,6 +246,8 @@ export default {
       tnwuserdatastore: {},
       messages: "",
       success: "",
+      total_featured_ad: 0,
+      no_of_featuredpost: 0,
 
       types: [
         "ရောင်းရန်အိမ်ခြံမြေများ",
@@ -484,6 +499,8 @@ export default {
       floor: "",
       build_year: "",
       bankinstallment: "No",
+      top_featured: false,
+      top_featured_ad: "",
     };
   },
 
@@ -515,6 +532,11 @@ export default {
 
     async create_property() {
       let userId = this.tnwuserdatastore.user_id;
+      if (this.top_featured == true) {
+        this.top_featured_ad = "Yes";
+      } else {
+        this.top_featured_ad = "No";
+      }
       if (this.title_mm == "") {
         this.messages = "Title ထည့်ပါ";
       } else if (this.property_type_id == "") {
@@ -550,6 +572,7 @@ export default {
             bankinstallment: this.bankinstallment,
             floor: this.floor,
             TypeOfProperty: this.TypeOfProperty,
+            top_featured: this.top_featured_ad,
             userId: userId,
           },
           {
@@ -575,11 +598,35 @@ export default {
           });
       }
     },
+
+    async fetch_package() {
+      var userId = this.tnwuserdatastore.user_id;
+      HTTP.get(`package/featuredpost/${userId}`)
+        .then((response) => {
+          this.no_of_featuredpost = response.data.featuredpost;
+        })
+        .catch((e) => {
+          this.no_of_featuredpost = 0;
+        });
+    },
+
+    async total_featured_ad_counter() {
+      var userId = this.tnwuserdatastore.user_id;
+      HTTP.get(`featured/index/${userId}`)
+        .then((response) => {
+          this.total_featured_ad = response.data.data;
+        })
+        .catch((e) => {
+          this.total_featured_ad = 0;
+        });
+    },
   },
 
   mounted() {
     this.fetch_regions();
     this.property_type();
+    this.fetch_package();
+    this.total_featured_ad_counter();
   },
 
   created() {

@@ -240,27 +240,121 @@
               <v-card-actions style="padding: 1px">
                 <v-spacer></v-spacer>
 
-                <v-btn
-                  v-if="property.soldout_status == 0"
-                  color="detailBtn"
-                  x-small
-                  class="white--text"
-                  @click="SoldOutProperty(property.sale_id)"
-                >
-                  <v-icon left small>mdi-swap-horizontal</v-icon>
-                  ရောင်းပြီးပြုလုပ်ရန်
-                </v-btn>
+                <v-bottom-sheet inset>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                      color="detailBtn"
+                      x-small
+                      class="white--text"
+                      v-bind="attrs"
+                      v-on="on"
+                    >
+                      <v-icon left small>mdi-menu</v-icon>
+                      Menu
+                    </v-btn>
+                  </template>
+                  <v-sheet height="auto">
+                    <v-list class="transparent">
+                      <v-list-item>
+                        <v-btn
+                          :to="{
+                            name: 'FeaturedProperty',
+                            params: { id: property.sale_id },
+                          }"
+                          small
+                          color="warning"
+                          block
+                          dark
+                        >
+                          <v-icon left small>mdi-home-edit-outline</v-icon>
+                          အထူးကြော်ငြာ ပြုလုပ်ရန်
+                        </v-btn>
+                      </v-list-item>
 
-                <v-btn
-                  v-if="property.soldout_status == 1"
-                  color="detailBtn"
-                  x-small
-                  class="white--text"
-                  @click="UndoSoldOutProperty(property.sale_id)"
-                >
-                  <v-icon left small>mdi-swap-horizontal</v-icon>
-                  Undo (Sold Out)
-                </v-btn>
+                      <v-list-item>
+                        <v-btn
+                          :to="{
+                            name: 'RefreshProperty',
+                            params: { id: property.sale_id },
+                          }"
+                          small
+                          color="indigo"
+                          block
+                          dark
+                        >
+                          <v-icon left small>mdi-home-edit-outline</v-icon>
+                          Refresh Ad
+                        </v-btn>
+                      </v-list-item>
+
+                      <v-list-item>
+                        <v-btn
+                          :to="{
+                            name: 'Adedit',
+                            params: { id: property.sale_id },
+                          }"
+                          small
+                          color="secondary"
+                          block
+                        >
+                          <v-icon left small>mdi-home-edit-outline </v-icon>
+                          ကြော်ငြာပြင်ရန်
+                        </v-btn>
+                      </v-list-item>
+
+                      <v-list-item>
+                        <v-btn
+                          @click="DeleteProperty(property.sale_id)"
+                          small
+                          color="error"
+                          block
+                        >
+                          <v-icon left small>mdi-delete-off-outline </v-icon>
+                          ကြော်ငြာဖျက်ရန်
+                        </v-btn>
+                      </v-list-item>
+
+                      <v-list-item>
+                        <v-btn
+                          :to="{
+                            name: 'Uploadphoto',
+                            params: { propertyId: property.sale_id },
+                          }"
+                          small
+                          color="success"
+                          block
+                        >
+                          <v-icon left small>mdi-image-multiple</v-icon>
+                          ဓာတ်ပုံထပ်ထည့်ရန်နှင့် ဖျက်ရန်
+                        </v-btn>
+                      </v-list-item>
+
+                      <v-list-item>
+                        <v-btn
+                          v-if="property.soldout_status == 0"
+                          @click="SoldOutProperty(property.sale_id)"
+                          small
+                          color="primary"
+                          block
+                        >
+                          <v-icon left small>mdi-swap-horizontal</v-icon>
+                          ရောင်းပြီးပြုလုပ်ရန်
+                        </v-btn>
+
+                        <v-btn
+                          v-if="property.soldout_status == 1"
+                          @click="UndoSoldOutProperty(property.sale_id)"
+                          small
+                          color="primary"
+                          block
+                        >
+                          <v-icon left small>mdi-swap-horizontal</v-icon>
+                          Undo (Sold Out)
+                        </v-btn>
+                      </v-list-item>
+                    </v-list>
+                  </v-sheet>
+                </v-bottom-sheet>
 
                 <v-col cols="auto">
                   <v-btn
@@ -295,10 +389,10 @@
       </div>
     </v-card>
 
-    <div
+    <!-- <div
       v-if="propertyies.length"
       v-observe-visibility="handleScrollToButton"
-    ></div>
+    ></div> -->
   </div>
 </template>
 
@@ -373,6 +467,22 @@ export default {
         })
         .catch((e) => {
           this.error = "မအောင်မြင်ပါ";
+        });
+    },
+
+    DeleteProperty: function (id) {
+      HTTP.get(`property/DeleteProperty/${id}`)
+        .then((response) => {
+          if (response.status === 200) {
+            this.success = "ဖျက်ပြီးပါပြီ";
+            this.error = "";
+            this.page = 0;
+            this.fetch();
+          }
+        })
+        .catch((e) => {
+          this.error = "မအောင်မြင်ပါ";
+          this.success = "";
         });
     },
 

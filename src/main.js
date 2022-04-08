@@ -9,6 +9,7 @@ import "share-api-polyfill";
 
 Vue.use(VueObserveVisibility)
 Vue.config.productionTip = false
+import "@/assets/global.css"
 
 new Vue({
   router,

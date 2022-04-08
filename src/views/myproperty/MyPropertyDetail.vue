@@ -530,13 +530,13 @@
         <v-sheet class="text-center" height="200px">
           <br />
 
-          <div class="py-1" hidden>
+          <div class="py-1">
             <v-btn
               :to="{
                 name: 'FeaturedProperty',
                 params: { id: propertyDetail.sale_id },
               }"
-              color="indigo"
+              color="warning"
               small
               dark
               block

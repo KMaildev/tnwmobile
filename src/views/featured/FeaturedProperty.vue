@@ -15,8 +15,41 @@
       {{ error }}
     </v-alert>
 
+    <v-simple-table class="mb-2">
+      <template>
+        <tbody style="background-color: #fafafa">
+          <tr>
+            <td style="font-size: 12px">
+              လစဉ်အထူးကြော်ငြာပြုလုပ်နိုင်သည့် အရေအတွက်
+            </td>
+            <td style="font-size: 12px">
+              {{ no_of_featuredpost }}
+            </td>
+          </tr>
+
+          <tr>
+            <td style="font-size: 12px">အထူးကြော်ငြာ ပြုလုပ်ပြီးသောအရေအတွက်</td>
+            <td style="font-size: 12px">{{ total_featured_ad }}</td>
+          </tr>
+
+          <tr>
+            <td style="font-size: 12px">
+              အထူးကြော်ငြာ ပြုလုပ်ရန် ကျန်ရှိသောအရေအတွက်
+            </td>
+            <td style="font-size: 12px">
+              {{ (PostTotal = +(no_of_featuredpost - total_featured_ad)) }}
+            </td>
+          </tr>
+        </tbody>
+      </template>
+    </v-simple-table>
+
     <div v-if="no_of_featuredpost == 0">
       <PackageNoOrder />
+    </div>
+
+    <div v-else-if="PostTotal == 0">
+      <FeaturedAdAlert />
     </div>
 
     <div v-else>
@@ -53,12 +86,9 @@
 import { HTTP } from "@/use/http-common";
 import Loader from "@/components/Loader";
 import PackageNoOrder from "@/components/PackageNoOrder";
-import {
-  IMAGE_URL,
-  LogoNotFound,
-  TatNayWonLogo,
-  APP_BASE_URL,
-} from "@/use/image-url";
+import FeaturedAdAlert from "@/components/FeaturedAdAlert";
+
+import { IMAGE_URL, APP_BASE_URL } from "@/use/image-url";
 
 export default {
   name: "FeaturedProperty",
@@ -66,6 +96,7 @@ export default {
   components: {
     Loader,
     PackageNoOrder,
+    FeaturedAdAlert,
   },
 
   data() {
@@ -81,6 +112,8 @@ export default {
       tatnaywon: {},
       IMAGE_URL: IMAGE_URL,
       APP_BASE_URL: APP_BASE_URL,
+
+      total_featured_ad: 0,
     };
   },
 
@@ -105,6 +138,17 @@ export default {
         });
     },
 
+    async total_featured_ad_counter() {
+      var userId = this.tnwuserdatastore.user_id;
+      HTTP.get(`featured/index/${userId}`)
+        .then((response) => {
+          this.total_featured_ad = response.data.data;
+        })
+        .catch((e) => {
+          this.total_featured_ad = 0;
+        });
+    },
+
     FeaturedPropertyNow: function (id) {
       HTTP.get(`property/featuredproperty/${id}`)
         .then((response) => {
@@ -122,6 +166,7 @@ export default {
 
   mounted() {
     this.fetch_package();
+    this.total_featured_ad_counter();
   },
 
   created() {

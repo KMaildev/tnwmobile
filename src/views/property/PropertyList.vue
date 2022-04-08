@@ -161,17 +161,21 @@
             {{ property.title_mm }}
           </router-link>
 
-          <img
+          <v-img
             v-if="property.photo"
             :src="IMAGE_URL + property.photo"
-            alt="Property"
+            alt="TatNayWon"
             style="
               width: 100%;
               height: 160px;
               object-fit: cover;
               object-position: top;
             "
-          />
+          >
+            <span v-if="property.top_featured === 'Yes'" class="top-featured">
+              အထူးကြော်ငြာ
+            </span>
+          </v-img>
         </div>
 
         <div class="text-center">

@@ -1,0 +1,14 @@
+.top-featured {
+    background-color: #ed8833;
+    color: white;
+    font-weight: bold;
+    float: right;
+    border-radius: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-right: 5px;
+    padding-left: 7px;
+    padding-right: 7px;
+    padding-bottom: 3px;
+    font-size: 12px;
+}
