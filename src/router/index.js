@@ -71,11 +71,10 @@ import PackagePlan from '@/views/Package/PackagePlan';
 import OrderNow from '@/views/Package/OrderNow';
 
 import PropertyByCompany from '@/views/propertybycompany/PropertyByCompany';
-
-
 import PropertyListStore from '@/views/LocalStore/PropertyListStore';
-
-
+import TopfeaturedProperty from '@/views/property/TopfeaturedProperty';
+import AllProperty from '@/views/property/AllProperty';
+import NotiDetail from '@/views/Notification/NotiDetail';
 
 
 Vue.use(VueRouter)
@@ -86,6 +85,20 @@ const routes = [
     name: 'Home',
     component: Home
   },
+
+
+  {
+    path: '/all_property',
+    name: 'AllProperty',
+    component: AllProperty
+  },
+
+  {
+    path: '/topfeatured_property',
+    name: 'TopfeaturedProperty',
+    component: TopfeaturedProperty
+  },
+
 
   {
     path: '/property/:propertyType',
@@ -411,6 +424,13 @@ const routes = [
     name: 'Notification',
     component: Notification
   },
+
+  {
+    path: '/noti_detail/:id',
+    name: 'NotiDetail',
+    component: NotiDetail
+  },
+
 
   {
     path: '/history',

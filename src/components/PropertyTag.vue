@@ -32,8 +32,15 @@ export default {
           title: "အထူးကြော်ငြာများ",
           eng: "အထူးကြော်ငြာများ",
           to: {
-            name: "property",
-            params: { propertyType: "for_sale" },
+            name: "TopfeaturedProperty",
+          },
+        },
+
+        {
+          title: "အိမ်ခြံမြေများအားလုံး",
+          eng: "All Property",
+          to: {
+            name: "AllProperty",
           },
         },
 
