@@ -14,7 +14,7 @@
             v-if="this.$route.params.propertyType === 'want_to_rent'"
             style="color: white"
           >
-            ရောင်းချင်ပါသည်
+            ငှါးချင်ပါသည်
           </span>
         </v-card-text>
 
