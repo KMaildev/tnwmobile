@@ -70,13 +70,16 @@
           </center>
         </div>
         <v-fade-transition mode="out-in">
+          <UploadLoading v-show="isUpload" />
+
           <div class="col-md-12 col-lg-12 col-sm-12">
             <v-row>
               <v-col cols="12">
                 Number Of Chosen Photos : {{ previewImages.length }}
               </v-col>
+              <!-- <Loader v-show="isLoad" /> -->
               <v-col cols="6" v-for="(image, key) in previewImages" :key="key">
-                <v-card>
+                <v-card v-show="!isLoad">
                   <img
                     v-bind:ref="'image'"
                     alt=""
@@ -100,36 +103,39 @@
               </v-col>
             </v-row>
 
-            <v-row v-if="status === true">
-              <v-col cols="12">
-                <hr />
-                <br />
-                Number Of Uploaded Photos : {{ images.length }}
-              </v-col>
-              <v-col cols="6" v-for="(image, index) in images" :key="index">
-                <v-card>
-                  <v-responsive :aspect-ratio="16 / 9">
-                    <v-img
-                      :src="IMAGE_URL + image.photo"
-                      height="125"
-                      class="grey darken-4"
-                    ></v-img>
-                    <v-card-actions>
-                      <v-spacer></v-spacer>
-                      <v-btn
-                        x-small
-                        block
-                        color="pink"
-                        dark
-                        @click="DeleteImage(image.propertie_id)"
-                      >
-                        Delete
-                      </v-btn>
-                    </v-card-actions>
-                  </v-responsive>
-                </v-card>
-              </v-col>
-            </v-row>
+            <Loader v-show="isLoad" />
+            <div v-show="!isLoad">
+              <v-row v-if="status === true">
+                <v-col cols="12">
+                  <hr />
+                  <br />
+                  Number Of Uploaded Photos : {{ images.length }}
+                </v-col>
+                <v-col cols="6" v-for="(image, index) in images" :key="index">
+                  <v-card>
+                    <v-responsive :aspect-ratio="16 / 9">
+                      <v-img
+                        :src="IMAGE_URL + image.photo"
+                        height="125"
+                        class="grey darken-4"
+                      ></v-img>
+                      <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn
+                          x-small
+                          block
+                          color="pink"
+                          dark
+                          @click="DeleteImage(image.propertie_id)"
+                        >
+                          Delete
+                        </v-btn>
+                      </v-card-actions>
+                    </v-responsive>
+                  </v-card>
+                </v-col>
+              </v-row>
+            </div>
           </div>
         </v-fade-transition>
       </v-row>
@@ -140,9 +146,16 @@
 <script>
 import { HTTP } from "@/use/http-common";
 import { IMAGE_URL } from "@/use/image-url";
+import Loader from "@/components/loading/photoLoading";
+import UploadLoading from "@/components/loading/UploadLoading";
 
 export default {
   name: "PhotoUpload",
+
+  components: {
+    Loader,
+    UploadLoading,
+  },
 
   data() {
     return {
@@ -153,13 +166,19 @@ export default {
       error: "",
       IMAGE_URL: IMAGE_URL,
       status: false,
+      isLoad: true,
+      isUpload: false,
     };
   },
 
   methods: {
     uploadImage: function () {
+      this.isUpload = true;
       // this.file = this.$refs.file.files[0];
       var totalFile = this.$refs.file.files.length;
+      if (totalFile > 0) {
+        this.isUpload = true;
+      }
       var total = 0;
       var formData = new FormData();
       for (var i = 0; i < this.$refs.file.files.length; i++) {
@@ -179,14 +198,21 @@ export default {
             if (response.status === 200) {
               this.success = "ဓာတ်ပုံတင်ပြီးပါပြီ";
               this.error = "";
+              // this.isUpload = true;
+              // this.$router.push({
+              //   name: "Uploadphoto",
+              //   params: { propertyId: this.$route.params.propertyId },
+              // });
+
               this.$router.push({
-                name: "Uploadphoto",
-                params: { propertyId: this.$route.params.propertyId },
+                name: "MyPropertyDetail",
+                params: { id: this.$route.params.propertyId },
               });
             }
           })
           .catch((e) => {
             this.error = "အချက်အလက်များကို ထည့်သွင်းပါ။";
+            // this.isUpload = false;
           });
       }
     },
@@ -221,10 +247,11 @@ export default {
         .then((response) => {
           this.images.push(...response.data.data);
           this.status = true;
+          this.isLoad = false;
         })
         .catch((e) => {
-          console.log(e);
           this.status = false;
+          this.isLoad = true;
         });
     },
 
