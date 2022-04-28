@@ -496,11 +496,11 @@ export default {
     },
 
     handleScrollToButton(isVisible) {
-      if (!isVisible) {
-        return;
-      }
-      this.page++;
-      this.fetch();
+      // if (!isVisible) {
+      //   return;
+      // }
+      // this.page++;
+      // this.fetch();
     },
 
     share(id) {

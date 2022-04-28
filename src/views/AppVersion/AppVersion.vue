@@ -33,7 +33,7 @@
     <div class="flex social-btns">
       <a
         class="app-btn blu flex vert"
-        href="https://play.google.com/store/apps/details?id=com.tatnaywonrealestatecompany.tatnaywonproperty"
+        href="https://apps.apple.com/mm/app/tat-nay-won/id1612967907"
         target="_blank"
       >
         <v-icon style="color: white"> mdi-google-play </v-icon>
@@ -45,7 +45,7 @@
 
       <a
         class="app-btn blu flex vert"
-        href="https://apps.apple.com/au/app/tatnaywonproperty/id1584755479"
+        href="https://play.google.com/store/apps/details?id=com.tatnaywonrealestatecompany.tatnaywonproperty"
         target="_blank"
       >
         <v-icon style="color: white"> mdi-apple </v-icon>

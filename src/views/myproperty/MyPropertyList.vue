@@ -363,10 +363,10 @@
       </div>
     </v-card>
 
-    <div
+    <!-- <div
       v-if="propertyies.length"
       v-observe-visibility="handleScrollToButton"
-    ></div>
+    ></div> -->
   </div>
 </template>
 
@@ -481,11 +481,11 @@ export default {
     },
 
     handleScrollToButton(isVisible) {
-      if (!isVisible) {
-        return;
-      }
-      this.page++;
-      this.fetch();
+      // if (!isVisible) {
+      //   return;
+      // }
+      // this.page++;
+      // this.fetch();
     },
 
     share(id) {

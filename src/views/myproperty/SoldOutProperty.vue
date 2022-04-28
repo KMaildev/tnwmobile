@@ -260,10 +260,10 @@
       </div>
     </v-card>
 
-    <div
+    <!-- <div
       v-if="propertyies.length"
       v-observe-visibility="handleScrollToButton"
-    ></div>
+    ></div> -->
   </div>
 </template>
 
