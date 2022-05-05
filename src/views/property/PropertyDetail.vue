@@ -17,12 +17,12 @@
         {{ error }}
       </v-alert>
 
-      <v-system-bar lights-out></v-system-bar>
+      <span style="padding: 10px">Photo</span>
       <v-carousel
         :continuous="true"
         :show-arrows="true"
         hide-delimiters
-        height="300"
+        height="auto"
       >
         <v-carousel-item
           v-for="(propertyPhoto, index) in propertyPhotos"
@@ -47,6 +47,19 @@
           </router-link>
         </v-carousel-item>
       </v-carousel>
+
+      <span style="padding: 10px">Google Map</span>
+      <iframe
+        :src="`https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=${propertyDetail.townships}&z=14&output=embed`"
+        width="100%"
+        height="250"
+        frameborder="0"
+        style="border: 0"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+      >
+      </iframe>
 
       <v-alert outlined color="warning" style="margin: 2px">
         <div>
@@ -547,6 +560,16 @@
         </v-row>
       </v-alert>
 
+      <iframe
+        v-if="propertyDetail.video"
+        width="100%"
+        height="auto"
+        :src="IMAGE_URL + propertyDetail.video"
+        frameborder="0"
+        allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+
       <v-card-title
         class="warr darken-2"
         style="line-height: 1rem; background-color: #af742e"
@@ -901,7 +924,7 @@
 <script>
 import { HTTP } from "@/use/http-common";
 import Loader from "@/components/Loader";
-import { APP_BASE_URL } from "@/use/image-url";
+import { APP_BASE_URL, IMAGE_URL } from "@/use/image-url";
 import AgentRequestInquiry from "@/components/AgentRequestInquiry";
 
 export default {
@@ -920,6 +943,7 @@ export default {
       propertyPhotos: [],
       tatnaywon: {},
       APP_BASE_URL: APP_BASE_URL,
+      IMAGE_URL: IMAGE_URL,
 
       direction: "top",
       fab: false,

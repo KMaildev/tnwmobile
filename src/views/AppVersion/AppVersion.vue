@@ -33,25 +33,25 @@
     <div class="flex social-btns">
       <a
         class="app-btn blu flex vert"
-        href="https://apps.apple.com/mm/app/tat-nay-won/id1612967907"
+        href="https://play.google.com/store/apps/details?id=com.tatnaywonrealestatecompany.tatnaywonproperty"
         target="_blank"
       >
         <v-icon style="color: white"> mdi-google-play </v-icon>
         <p style="margin-top: 5px">
           Available on the <br />
-          <span class="big-txt">App Store</span>
+          <span class="big-txt"> Google Play </span>
         </p>
       </a>
 
       <a
         class="app-btn blu flex vert"
-        href="https://play.google.com/store/apps/details?id=com.tatnaywonrealestatecompany.tatnaywonproperty"
+        href="https://apps.apple.com/mm/app/tat-nay-won/id1612967907"
         target="_blank"
       >
         <v-icon style="color: white"> mdi-apple </v-icon>
         <p style="margin-top: 5px">
           Get it on <br />
-          <span class="big-txt">Google Play</span>
+          <span class="big-txt"> App Store </span>
         </p>
       </a>
     </div>

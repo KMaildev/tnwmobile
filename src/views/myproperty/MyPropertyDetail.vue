@@ -11,8 +11,7 @@
       {{ success }}
     </v-alert>
 
-    <v-card elevation="24" max-width="444" class="mx-auto">
-      <v-system-bar lights-out></v-system-bar>
+    <v-card elevation="24" max-width="auto" class="mx-auto">
       <Loader v-show="isLoad" />
       <v-carousel
         v-show="!isLoad"
@@ -523,12 +522,22 @@
       </div>
     </v-card>
 
+    <iframe
+      v-if="propertyDetail.video"
+      width="100%"
+      height="auto"
+      :src="IMAGE_URL + propertyDetail.video"
+      frameborder="0"
+      allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+    ></iframe>
+
     <div class="text-center">
       <v-btn color="warning" dark @click="sheet = !sheet" block>
         လုပ်ဆောင်ချက်များ
       </v-btn>
       <v-bottom-sheet v-model="sheet">
-        <v-sheet class="text-center" height="200px">
+        <v-sheet class="text-center" height="auto">
           <br />
 
           <div class="py-1">
@@ -604,6 +613,22 @@
             >
               <v-icon left> mdi-image-multiple </v-icon>
               ဓာတ်ပုံထပ်ထည့်ရန်နှင့် ဖျက်ရန်
+            </v-btn>
+          </div>
+
+          <div class="py-1">
+            <v-btn
+              color="success"
+              small
+              dark
+              :to="{
+                name: 'videoupload',
+                params: { propertyId: propertyDetail.sale_id },
+              }"
+              block
+            >
+              <v-icon left> mdi-image-multiple </v-icon>
+              Upload video
             </v-btn>
           </div>
 

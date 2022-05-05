@@ -306,6 +306,21 @@
 
                     <v-list-item>
                       <v-btn
+                        :to="{
+                          name: 'videoupload',
+                          params: { propertyId: property.sale_id },
+                        }"
+                        small
+                        color="success"
+                        block
+                      >
+                        <v-icon left small>mdi-image-multiple</v-icon>
+                        Upload video
+                      </v-btn>
+                    </v-list-item>
+
+                    <v-list-item>
+                      <v-btn
                         v-if="property.soldout_status == 0"
                         @click="SoldOutProperty(property.sale_id)"
                         small

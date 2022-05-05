@@ -77,6 +77,9 @@ import AllProperty from '@/views/property/AllProperty';
 import NotiDetail from '@/views/Notification/NotiDetail';
 
 
+import VideoUpload from '@/views/Video/VideoUpload';
+
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -294,6 +297,12 @@ const routes = [
     component: PhotoUpload
   },
 
+
+  {
+    path: '/videoupload/:propertyId',
+    name: 'videoupload',
+    component: VideoUpload
+  },
 
 
 
