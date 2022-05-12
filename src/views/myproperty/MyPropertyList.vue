@@ -476,8 +476,9 @@ export default {
           if (response.status === 200) {
             this.success = "ဖျက်ပြီးပါပြီ";
             this.error = "";
-            this.page = 0;
-            this.fetch();
+            this.$router.go()
+            // this.page = 0;
+            // this.fetch();
           }
         })
         .catch((e) => {

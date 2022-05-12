@@ -143,7 +143,7 @@
               style="height: 130px"
               :to="{
                 name: 'MyPropertyList',
-                params: { propertyType: 'new_property' },
+                params: { propertyType: 'new_properties' },
               }"
             >
               <v-icon large style="padding-top: 6px"

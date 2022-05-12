@@ -214,7 +214,7 @@ export default {
         icon: "mdi-office-building",
         to: {
           name: "property",
-          params: { propertyType: "new_property" },
+          params: { propertyType: "new_properties" },
         },
       },
 

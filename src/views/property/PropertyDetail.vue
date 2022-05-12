@@ -17,7 +17,7 @@
         {{ error }}
       </v-alert>
 
-      <span style="padding: 10px">Photo</span>
+      <span style="padding: 15px">Photo</span>
       <v-carousel
         :continuous="true"
         :show-arrows="true"
@@ -48,18 +48,16 @@
         </v-carousel-item>
       </v-carousel>
 
-      <span style="padding: 10px">Google Map</span>
+      <span v-if="propertyDetail.video" style="padding: 15px">Video</span>
       <iframe
-        :src="`https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=${propertyDetail.townships}&z=14&output=embed`"
+        v-if="propertyDetail.video"
         width="100%"
-        height="250"
+        height="auto"
+        :src="IMAGE_URL + propertyDetail.video"
         frameborder="0"
-        style="border: 0"
-        allowfullscreen=""
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"
-      >
-      </iframe>
+        allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
 
       <v-alert outlined color="warning" style="margin: 2px">
         <div>
@@ -560,16 +558,6 @@
         </v-row>
       </v-alert>
 
-      <iframe
-        v-if="propertyDetail.video"
-        width="100%"
-        height="auto"
-        :src="IMAGE_URL + propertyDetail.video"
-        frameborder="0"
-        allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-      ></iframe>
-
       <v-card-title
         class="warr darken-2"
         style="line-height: 1rem; background-color: #af742e"
@@ -749,7 +737,7 @@
         </v-card-text>
       </form>
 
-      <form @submit.prevent="TakeAppointments" id="formbottom">
+      <form @submit.prevent="TakeAppointments">
         <v-card-text>
           <v-row>
             <v-col cols="6" sm="6" md="6">
@@ -831,7 +819,21 @@
         </v-card-text>
       </form>
 
-      <div id="create">
+      <div>
+        <span style="padding: 10px">Google Map</span>
+        <iframe
+          :src="`https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=${propertyDetail.townships}&z=14&output=embed`"
+          width="100%"
+          height="250"
+          frameborder="0"
+          style="border: 0"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        >
+        </iframe>
+      </div>
+      <div id="create" style="padding-top: 70px">
         <v-speed-dial
           v-model="fab"
           :top="top"

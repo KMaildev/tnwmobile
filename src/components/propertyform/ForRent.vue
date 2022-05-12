@@ -8,8 +8,6 @@
               label="Title"
               v-model="title_mm"
               autocomplete="on"
-              :rules="[() => !!title_mm || 'This field is required']"
-              required
               filled
             ></v-text-field>
 
@@ -197,8 +195,6 @@
               name="input-7-1"
               label="Description"
               v-model="description_mm"
-              :rules="[() => !!description_mm || 'This field is required']"
-              required
               filled
             ></v-textarea>
 
@@ -228,6 +224,26 @@
             ကြော်ငြာတင်မည်
           </v-btn>
         </v-card-actions>
+
+        <v-alert
+          dense
+          outlined
+          type="success"
+          v-if="success"
+          style="margin: 2px"
+        >
+          {{ success }}
+        </v-alert>
+
+        <v-alert
+          dense
+          outlined
+          type="error"
+          v-if="messages"
+          style="margin: 2px"
+        >
+          {{ messages }}
+        </v-alert>
       </v-card>
     </form>
   </div>
@@ -537,14 +553,15 @@ export default {
       } else {
         this.top_featured_ad = "No";
       }
-      if (this.title_mm == "") {
-        this.messages = "Title ထည့်ပါ";
-      } else if (this.property_type_id == "") {
+      if (this.property_type_id == "") {
         this.messages = "Property Type ကို ရွေးပါ";
+        this.success = "";
       } else if (this.region_id == "") {
-        this.messages = "တိုင်းဒေသကြီးကို ရွေးပါ";
+        this.messages = "တိုင်းဒေသကြီးကို ရွေးပါ / Choose Region/State";
+        this.success = "";
       } else if (this.township_id == "") {
-        this.messages = "မြို့နယ်ကို ရွေးပါ";
+        this.messages = "မြို့နယ်ကို ရွေးပါ / Choose Township";
+        this.success = "";
       } else {
         HTTP.post(
           "property/creat",
