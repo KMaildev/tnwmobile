@@ -461,6 +461,7 @@ export default {
 
   methods: {
     async property_fetch() {
+      console.log(this.propertyPage);
       HTTP.get(`property/allproperty/${this.propertyPage}`)
         .then((response) => {
           this.propertyies.push(...response.data.data);
